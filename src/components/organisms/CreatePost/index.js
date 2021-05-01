@@ -1,12 +1,34 @@
 import { useState } from "react";
 
+import { database, storage } from "../../../config";
+
 function CreatePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleSubmit = () => {
-    console.log(title, content);
+    console.log(image.name);
+
+    // const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+    // uploadTask.on("state_changed", console.log, console.error, () => {
+    //   storage
+    //     .ref("images")
+    //     .child(image.name)
+    //     .getDownloadURL()
+    //     .then(url => {
+    //       console.log(url);
+    //     });
+    // });
+
+    // 'file' comes from the Blob or File API
+    storage
+      .ref(`/images/${image.name}`)
+      .put(image)
+      .then(response => {
+        console.log(response);
+        console.log("Uploaded a blob or file!");
+      });
   };
 
   return (
@@ -29,15 +51,20 @@ function CreatePost() {
         <label htmlFor="image" className="form-label">
           Choose Image
         </label>
-        <input className="form-control" type="file" id="image" />
+        <input
+          className="form-control"
+          type="file"
+          id="image"
+          onChange={e => setImage(e.target.files[0])}
+        />
       </div>
 
-      <label htmlFor="floatingTextarea2">Content</label>
-      <div className="form-floating">
+      <label htmlFor="content">Content</label>
+      <div>
         <textarea
           className="form-control"
           placeholder="Leave a comment here"
-          id="floatingTextarea2"
+          id="content"
           style={{ height: "200px" }}
           onChange={e => setContent(e.target.value)}
           value={content}

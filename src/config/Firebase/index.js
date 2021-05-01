@@ -1,6 +1,8 @@
 // don't do this for production server
 
 import firebase from "firebase";
+import "firebase/storage";
+import "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB0jHToKn_5i_y0325WxyA01LCFZ1VzWcY",
@@ -12,5 +14,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+const database = firebase.database();
 
-export default firebase;
+export { firebase, storage, database };
