@@ -42,7 +42,8 @@ function CreatePost() {
           database
             .ref("posts/" + slugify(title, { lower: true, strict: true }))
             .set({
-              title: slugify(title, { lower: true, strict: true }),
+              title: title,
+              slug: slugify(title, { lower: true, strict: true }),
               imageUrl: imageUrl,
               content: content,
             })

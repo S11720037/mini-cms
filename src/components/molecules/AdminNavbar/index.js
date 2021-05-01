@@ -36,9 +36,9 @@ function AdminNavbar() {
               <Link
                 className="nav-link"
                 aria-current="page"
-                to={`${url}/about`}
+                to={`${url}/create-post`}
               >
-                About
+                Create Post
               </Link>
             </li>
           </ul>
