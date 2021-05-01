@@ -1,6 +1,6 @@
 // don't do this for production server
 
-import firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/database";
 
@@ -17,4 +17,4 @@ firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 const database = firebase.database();
 
-export { firebase, storage, database };
+export { storage, database };
