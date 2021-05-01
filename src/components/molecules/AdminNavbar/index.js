@@ -1,4 +1,8 @@
+import { Link, useRouteMatch } from "react-router-dom";
+
 function AdminNavbar() {
+  let { url } = useRouteMatch();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
       <div className="container-fluid">
@@ -19,9 +23,23 @@ function AdminNavbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
+              <Link className="nav-link" aria-current="page" to={`${url}`}>
                 Home
-              </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" aria-current="page" to={`${url}/post`}>
+                Post
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                aria-current="page"
+                to={`${url}/about`}
+              >
+                About
+              </Link>
             </li>
           </ul>
         </div>
