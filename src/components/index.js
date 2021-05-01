@@ -1,3 +1,3 @@
-import { Navbar } from "./molecules";
+import { Navbar, AdminNavbar } from "./molecules";
 
-export { Navbar };
+export { Navbar, AdminNavbar };

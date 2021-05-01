@@ -1,3 +1,4 @@
 import Navbar from "./Navbar";
+import AdminNavbar from "./AdminNavbar";
 
-export { Navbar };
+export { Navbar, AdminNavbar };

@@ -1,11 +1,7 @@
-import { Navbar } from "./components";
+import Routes from "./routes";
 
 function App() {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  );
+  return <Routes />;
 }
 
 export default App;
