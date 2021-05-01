@@ -46,6 +46,7 @@ function CreatePost() {
               slug: slugify(title, { lower: true, strict: true }),
               imageUrl: imageUrl,
               content: content,
+              updated: new Date().toLocaleString(),
             })
             .then(() => {
               console.log("data berhasil ditambahkan");

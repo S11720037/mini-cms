@@ -64,7 +64,7 @@ function Admin() {
                             </p>
                             <p className="card-text">
                               <small className="text-muted">
-                                Last updated 3 mins ago
+                                Published on {post.updated.split(" ")[0]}
                               </small>
                             </p>
                           </div>
