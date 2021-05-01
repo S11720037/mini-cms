@@ -1,3 +1,4 @@
 import { Navbar, AdminNavbar } from "./molecules";
+import { CreatePost } from "./organisms";
 
-export { Navbar, AdminNavbar };
+export { Navbar, AdminNavbar, CreatePost };

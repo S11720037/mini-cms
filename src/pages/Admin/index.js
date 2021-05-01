@@ -1,6 +1,6 @@
-import { AdminNavbar } from "../../components";
-
 import { Switch, Route, useRouteMatch } from "react-router-dom";
+
+import { AdminNavbar, CreatePost } from "../../components";
 
 function Admin() {
   document.title = "Mini CMS | Admin";
@@ -16,11 +16,17 @@ function Admin() {
             <Route exact path={path}>
               <h3>Halaman Awal</h3>
             </Route>
+
             <Route path={`${path}/post`}>
               <h3>Kumpulan Post</h3>
             </Route>
+
             <Route path={`${path}/about`}>
               <h3>Halaman About</h3>
+            </Route>
+
+            <Route path={`${path}/create-post`}>
+              <CreatePost />
             </Route>
           </Switch>
         </div>
