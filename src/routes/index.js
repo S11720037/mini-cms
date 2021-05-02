@@ -9,6 +9,9 @@ function Routes() {
         <Route exact path="/">
           <Home />
         </Route>
+        <Route path="/:slug">
+          <Home />
+        </Route>
         <Route path="/admin">
           <Admin />
         </Route>

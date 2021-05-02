@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 
 import { Navbar } from "../../components";
 import { database } from "../../config";
@@ -19,6 +20,8 @@ function Home() {
       }
     });
   }, []);
+
+  const { slug } = useParams();
 
   return (
     <div>
@@ -52,7 +55,12 @@ function Home() {
                     </div>
                     <div className="col-sm-8">
                       <div className="card-body">
-                        <h3 className="card-title">{post.title}</h3>
+                        <Link
+                          to={post.slug}
+                          className="text-decoration-none text-dark"
+                        >
+                          <h3 className="card-title">{post.title}</h3>
+                        </Link>
                         <hr />
                         <p className="card-text">
                           {post.content.substring(0, 200)}...
