@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Admin, Home } from "../pages";
+import { Admin, Home, PostDetail } from "../pages";
 
 function Routes() {
   return (
@@ -10,7 +10,7 @@ function Routes() {
           <Home />
         </Route>
         <Route path="/:slug">
-          <Home />
+          <PostDetail />
         </Route>
         <Route path="/admin">
           <Admin />

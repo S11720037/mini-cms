@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Navbar } from "../../components";
 import { database } from "../../config";
@@ -20,8 +20,6 @@ function Home() {
       }
     });
   }, []);
-
-  const { slug } = useParams();
 
   return (
     <div>
