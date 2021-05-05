@@ -7,6 +7,8 @@ import { database } from "../../config";
 export default function PostDetail() {
   const { slug } = useParams();
 
+  console.log(slug);
+
   const [post, setPost] = useState({});
 
   useEffect(() => {

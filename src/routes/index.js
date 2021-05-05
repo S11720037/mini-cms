@@ -9,11 +9,11 @@ function Routes() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/:slug">
-          <PostDetail />
-        </Route>
         <Route path="/admin">
           <Admin />
+        </Route>
+        <Route path="/:slug">
+          <PostDetail />
         </Route>
       </Switch>
     </Router>
