@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 import { database, storage } from "../../../config";
 import { Spinner } from "../../../components";
 
 function EditPost() {
   const { slug } = useParams();
+  const history = useHistory();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -17,14 +18,17 @@ function EditPost() {
   useEffect(() => {
     database.ref("posts/" + slug).on("value", response => {
       const data = response.val();
-
       setPost(data);
-
-      setTitle(data.title);
-      setContent(data.content);
-      setPreviewImageUrl(data.imageUrl);
     });
-  }, [slug]);
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(post).length > 0) {
+      setTitle(post.title);
+      setContent(post.content);
+      setPreviewImageUrl(post.imageUrl);
+    }
+  }, [post]);
 
   const handleImage = e => {
     if (e !== undefined) {
@@ -94,6 +98,16 @@ function EditPost() {
               .catch(err => alert(err));
           });
       });
+    }
+  };
+
+  const handleDelete = () => {
+    const confirm = window.confirm("Yakin ingin menghapus postingan?");
+
+    if (confirm === true) {
+      database.ref("posts/" + slug).remove();
+      alert("Postingan berhasil dihapus");
+      history.push("/admin");
     }
   };
 
@@ -197,6 +211,14 @@ function EditPost() {
             <Spinner />
           </button>
         )}
+        <button
+          type="button"
+          className="btn btn-danger m-1"
+          onClick={handleDelete}
+          style={{ minWidth: "100px" }}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
