@@ -1,72 +1,110 @@
 import { useState, useEffect } from "react";
-import slugify from "slugify";
-import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { database, storage } from "../../../config";
 import { Spinner } from "../../../components";
 
 function EditPost() {
-  let history = useHistory();
-
-  const slug = window.location.href.split("/");
-  console.log(slug);
+  const { slug } = useParams();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
-  const [buttonStatus, setButtonStatus] = useState("disable");
+  const [previewImageUrl, setPreviewImageUrl] = useState(null);
+  const [buttonStatus, setButtonStatus] = useState("enable");
+  const [post, setPost] = useState({});
 
-  // for image
   useEffect(() => {
-    const validate = () => {
-      if (title.length > 0 && content.length > 0 && image !== null) {
-        setButtonStatus("enable");
-      } else {
-        setButtonStatus("disable");
-      }
-    };
+    database.ref("posts/" + slug).on("value", response => {
+      const data = response.val();
 
-    validate();
-  }, [title, image, content]);
+      setPost(data);
+
+      setTitle(data.title);
+      setContent(data.content);
+      setPreviewImageUrl(data.imageUrl);
+    });
+  }, [slug]);
+
+  const handleImage = e => {
+    if (e !== undefined) {
+      // save new image to state
+      setImage(e);
+      setPreviewImageUrl(URL.createObjectURL(e));
+    } else {
+      // use default image when use not choose the image
+      setImage(null);
+      setPreviewImageUrl(post.imageUrl);
+    }
+  };
 
   const handleSubmit = () => {
     setButtonStatus("loading");
 
-    console.log(slugify(title, { lower: true, strict: true }));
-    const uploadTask = storage.ref(`/images/${image.name}`).put(image);
-    uploadTask.on("state_changed", console.log, console.error, () => {
-      storage
-        .ref("images")
-        .child(image.name)
-        .getDownloadURL()
-        .then(imageUrl => {
-          // store to database
-          console.log(imageUrl);
-          database
-            .ref("posts/" + slugify(title, { lower: true, strict: true }))
-            .set({
-              title: title,
-              slug: slugify(title, { lower: true, strict: true }),
-              imageUrl: imageUrl,
-              content: content,
-              updated: new Date().toLocaleString(),
-            })
-            .then(() => {
-              console.log("data berhasil ditambahkan");
+    // filter the data
+    if (title.length <= 0) {
+      alert("Judul Postingan Terlalu Pendek");
+      setButtonStatus("enable");
+      return;
+    } else if (content.length <= 0) {
+      alert("Konten Postingan Terlalu Pendek");
+      setButtonStatus("enable");
+      return;
+    }
 
-              history.push("/admin");
-            })
-            .catch(err => console.lor(err));
-        });
-    });
+    if (image === null) {
+      // update data, except image
+      database
+        .ref("posts/" + post.slug)
+        .update({
+          title: title,
+          slug: post.slug,
+          content: content,
+          imageUrl: post.imageUrl,
+          updated: new Date().toLocaleString(),
+        })
+        .then(() => {
+          setButtonStatus("enable");
+          alert("Postingan berhasil diupdate");
+        })
+        .catch(err => alert(err));
+    } else {
+      // update data with image
+      const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+      uploadTask.on("state_changed", console.log, console.error, () => {
+        storage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then(imageUrl => {
+            // store to google firebase
+            database
+              .ref("posts/" + post.slug)
+              .update({
+                title: title,
+                slug: post.slug,
+                imageUrl: imageUrl,
+                content: content,
+                updated: new Date().toLocaleString(),
+              })
+              .then(() => {
+                setButtonStatus("enable");
+                alert("Postingan berhasil diupdate");
+              })
+              .catch(err => alert(err));
+          });
+      });
+    }
   };
 
   return (
     <div>
-      <h2 className="text-center">Create Post</h2>
+      <h2 className="text-center">Edit Post</h2>
       <hr />
 
-      <label htmlFor="title">Title</label>
+      <label htmlFor="title">
+        <span className="fs-2">Title</span>
+      </label>
       <div className="mb-3">
         <input
           type="email"
@@ -78,18 +116,45 @@ function EditPost() {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="image" className="form-label">
-          Image
+        <label>
+          <span className="fs-2">Image</span>
+        </label>
+        <br />
+        <label htmlFor="image" className="form-label" style={{ width: "100%" }}>
+          {previewImageUrl && (
+            <div className="card mb-3" style={{ width: "100%" }}>
+              <div className="row ">
+                <div className="col-md-6">
+                  <img
+                    src={previewImageUrl}
+                    className="img-thumbnail"
+                    alt="..."
+                  />
+                </div>
+                <div className="col-md-6">
+                  <div
+                    className="card-body d-flex justify-content-center align-items-center"
+                    style={{ height: "100%" }}
+                  >
+                    <div className="fs-4">Choose Image</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </label>
         <input
           className="form-control"
           type="file"
           id="image"
-          onChange={e => setImage(e.target.files[0])}
+          onChange={e => handleImage(e.target.files[0])}
+          style={{ display: "none" }}
         />
       </div>
 
-      <label htmlFor="content">Content</label>
+      <label htmlFor="content">
+        <span className="fs-2">Content</span>
+      </label>
       <div>
         <textarea
           className="form-control"
@@ -109,7 +174,7 @@ function EditPost() {
             onClick={handleSubmit}
             style={{ minWidth: "100px" }}
           >
-            Post
+            Update
           </button>
         )}
         {buttonStatus === "disable" && (
@@ -119,7 +184,7 @@ function EditPost() {
             onClick={handleSubmit}
             style={{ minWidth: "100px" }}
           >
-            Post
+            Update
           </button>
         )}
         {buttonStatus === "loading" && (

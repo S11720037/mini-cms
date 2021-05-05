@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
 
-import { AdminNavbar, CreatePost } from "../../components";
+import { AdminNavbar, CreatePost, EditPost } from "../../components";
 import { database } from "../../config";
 import { Spinner } from "../../components";
 
@@ -28,8 +28,8 @@ function Admin() {
     <div>
       <AdminNavbar />
 
-      <div className="container-fluid p-1 m-0 mt-3">
-        <div className="container-xl border rounded shadow p-3">
+      <div className="container-fluid p-1 m-0 pt-3 mb-3">
+        <div className="container-lg border rounded shadow p-3 bg-white">
           <Switch>
             <Route exact path={path}>
               <h2 className="text-center">Mini CMS Admin</h2>
@@ -58,7 +58,11 @@ function Admin() {
                         </div>
                         <div className="col-sm-8">
                           <div className="card-body">
-                            <h3 className="card-title">{post.title}</h3>
+                            <h3 className="card-title">
+                              <Link to={`${path}/${post.slug}/edit`}>
+                                {post.title}
+                              </Link>
+                            </h3>
                             <p className="card-text">
                               {post.content.substring(0, 200)}...
                             </p>
@@ -74,6 +78,11 @@ function Admin() {
                   ))}
                 </div>
               )}
+            </Route>
+
+            {/* edit post */}
+            <Route path={`${path}/:slug/edit`}>
+              <EditPost />
             </Route>
 
             <Route path={`${path}/post`}>

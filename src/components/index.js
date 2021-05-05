@@ -1,5 +1,5 @@
 import { Navbar, AdminNavbar } from "./molecules";
-import { CreatePost } from "./organisms";
+import { CreatePost, EditPost } from "./organisms";
 import { Spinner } from "./atoms";
 
-export { Navbar, AdminNavbar, CreatePost, Spinner };
+export { Navbar, AdminNavbar, CreatePost, EditPost, Spinner };
