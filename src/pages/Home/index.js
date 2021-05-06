@@ -25,10 +25,10 @@ function Home() {
     <div>
       <Navbar />
 
-      <div className="p-1 mt-3">
-        <div className="container-lg rounded border shadow-sm p-2">
-          <h2>Latest Post</h2>
-          <hr />
+      <div className="p-1 pt-3" style={{ minHeight: "92.5vh" }}>
+        <div className="container-lg rounded border shadow-sm p-2 bg-white">
+          {/* <h2>Latest Post</h2> */}
+          {/* <hr /> */}
 
           {posts.length === 0 && (
             <div className="text-center">
@@ -43,15 +43,15 @@ function Home() {
                   key={index}
                 >
                   <div className="row p-1">
-                    <div className="col-sm-4">
+                    <div className="col-lg-4">
                       <img
-                        className="border rounded"
+                        className="border"
                         src={post.imageUrl}
                         alt={post.title}
-                        style={{ maxWidth: "100%" }}
+                        style={{ width: "100%" }}
                       />
                     </div>
-                    <div className="col-sm-8">
+                    <div className="col-lg-8">
                       <div className="card-body">
                         <Link
                           to={post.slug}
@@ -61,7 +61,7 @@ function Home() {
                         </Link>
                         <hr />
                         <p className="card-text">
-                          {post.content.substring(0, 200)}...
+                          {post.content.substring(0, 80)}...
                         </p>
                         <p className="card-text">
                           <small className="text-muted">

@@ -7,17 +7,17 @@ import { database } from "../../config";
 export default function PostDetail() {
   const { slug } = useParams();
 
-  console.log(slug);
-
   const [post, setPost] = useState({});
 
   useEffect(() => {
     database.ref("posts/" + slug).on("value", res => {
       setPost(res.val());
     });
+  }, [slug]);
 
+  useEffect(() => {
     document.title = `Mini CMS | ${post.title}`;
-  }, []);
+  }, [post]);
 
   return (
     <div>

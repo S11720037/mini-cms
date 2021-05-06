@@ -20,7 +20,7 @@ function EditPost() {
       const data = response.val();
       setPost(data);
     });
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
     if (Object.keys(post).length > 0) {
