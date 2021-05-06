@@ -6,6 +6,8 @@ import { database } from "../../config";
 import { Spinner } from "../../components";
 
 function Home() {
+  document.title = "Mini CMS | Home";
+
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
