@@ -1,3 +1,3 @@
-import { storage, database } from "./Firebase";
+import { storage, database, auth } from "./Firebase";
 
-export { storage, database };
+export { storage, database, auth };

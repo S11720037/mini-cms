@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Admin, Home, PostDetail } from "../pages";
+import { Admin, Home, PostDetail, Login } from "../pages";
 
 function Routes() {
   return (
@@ -11,6 +11,9 @@ function Routes() {
         </Route>
         <Route path="/admin">
           <Admin />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/:slug">
           <PostDetail />
