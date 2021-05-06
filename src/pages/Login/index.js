@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import { auth } from "../../config";
 import { Spinner } from "../../components";
@@ -8,10 +9,17 @@ export default function Login() {
   document.title = "Mini CMS | Login";
 
   const history = useHistory();
+  const [cookies, setCookie] = useCookies(["isAuthenticated"]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (cookies.isAuthenticated) {
+      history.push("/admin");
+    }
+  }, [cookies, history]);
 
   const handleLogin = e => {
     e.preventDefault();
@@ -23,6 +31,8 @@ export default function Login() {
       .then(userCredential => {
         // const user = userCredential.user;
         setIsLoading(false);
+
+        setCookie("isAuthenticated", true);
 
         history.push("/admin");
       })

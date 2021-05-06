@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useRouteMatch, Link } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useRouteMatch,
+  Link,
+  useHistory,
+} from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import { AdminNavbar, CreatePost, EditPost } from "../../components";
 import { database } from "../../config";
@@ -7,7 +14,10 @@ import { Spinner } from "../../components";
 
 function Admin() {
   document.title = "Mini CMS | Admin";
+
   let { path } = useRouteMatch();
+  const history = useHistory();
+  const [cookies] = useCookies();
 
   const [posts, setPosts] = useState([]);
 
@@ -23,6 +33,13 @@ function Admin() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (cookies.isAuthenticated) {
+    } else {
+      history.push("/login");
+    }
+  }, [cookies, history]);
 
   return (
     <div>
