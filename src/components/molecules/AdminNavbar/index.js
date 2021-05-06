@@ -6,7 +6,7 @@ function AdminNavbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <a className="navbar-brand" href="/" target="_blank">
           Mini CMS
         </a>
         <button
@@ -23,12 +23,7 @@ function AdminNavbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to={`${url}`}>
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to={`${url}/post`}>
+              <Link className="nav-link" aria-current="page" to={"/admin"}>
                 Post
               </Link>
             </li>

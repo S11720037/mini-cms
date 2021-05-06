@@ -48,7 +48,7 @@ function Admin() {
                       key={index}
                     >
                       <div className="row p-1">
-                        <div className="col-sm-4">
+                        <div className="col-sm-2">
                           <img
                             className="border rounded"
                             src={post.imageUrl}
@@ -56,21 +56,24 @@ function Admin() {
                             style={{ maxWidth: "100%" }}
                           />
                         </div>
-                        <div className="col-sm-8">
+                        <div className="col-sm-10 d-flex align-items-center justify-content-center">
                           <div className="card-body">
-                            <h3 className="card-title">
-                              <Link to={`${path}/${post.slug}/edit`}>
+                            <Link
+                              to={`${path}/${post.slug}/edit`}
+                              className="text-decoration-none text-dark"
+                            >
+                              <h3 className="card-title text-center fs-4">
                                 {post.title}
-                              </Link>
-                            </h3>
-                            <p className="card-text">
+                              </h3>
+                            </Link>
+                            {/* <p className="card-text">
                               {post.content.substring(0, 200)}...
                             </p>
                             <p className="card-text">
                               <small className="text-muted">
                                 Published on {post.updated.split(" ")[0]}
                               </small>
-                            </p>
+                            </p> */}
                           </div>
                         </div>
                       </div>
