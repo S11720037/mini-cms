@@ -23,7 +23,7 @@ export default function PostDetail() {
     <div>
       <Navbar />
 
-      <div className="p-1 mt-3">
+      <div className="p-1 mt-3 mb-3">
         <div className="container-lg border rounded shadow p-2">
           <h3 className="text-center">{post.title}</h3>
           <hr />
