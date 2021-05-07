@@ -34,6 +34,7 @@ export default function PostDetail() {
               alt="..."
               style={{ maxWidth: "77vw" }}
             />
+            <hr />
           </div>
           <div>{post.content}</div>
         </div>
